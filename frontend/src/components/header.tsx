@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 import React from "react";
 
+=======
+>>>>>>> frontend
 export default function Header() {
     return (
         <header className="text-primary-50 p-4">
