@@ -20,6 +20,16 @@ export default function Header() {
                             <path d="M33 33L30 30M31.5 17.25C31.5 25.1201 25.1201 31.5 17.25 31.5C9.37994 31.5 3 25.1201 3 17.25C3 9.37994 9.37994 3 17.25 3C25.1201 3 31.5 9.37994 31.5 17.25Z" stroke="#B9B9B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </button>
+                    <button className="w-28 ml-6 bg-transparent text-secondary text-2xl 
+                    border border-secondary border-4 rounded-xl
+                    hover:scale-105 hover:text-onSecondary 
+                    hover:bg-gradient-to-r hover:from-secondary hover:to-blue-500
+                    hover:border-none
+                    transition duration-300 ease-in-out 
+                    ">
+                        +
+                    </button>
+                    
                 </div>
             </div>
         </header>
