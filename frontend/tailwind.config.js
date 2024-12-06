@@ -53,7 +53,8 @@ export default {
         'Segoe UI Emoji',
         'Segoe UI Symbol',
         'Noto Color Emoji'
-      ]
+      ],
+      'roboto-mono': ['"Roboto Mono"', 'monospace'],
     },
   },
   plugins: [],

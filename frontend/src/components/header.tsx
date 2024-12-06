@@ -21,9 +21,9 @@ export default function Header() {
                         </svg>
                     </button>
                     <button className="w-28 ml-6 bg-transparent text-secondary text-2xl 
-                    border border-secondary border-4 rounded-xl
+                    border border-secondary border-4 rounded-3xl
                     hover:scale-105 hover:text-onSecondary 
-                    hover:bg-gradient-to-r hover:from-secondary hover:to-blue-500
+                    hover:bg-gradient-to-r hover:from-secondary hover:to-primary-50
                     hover:border-none
                     transition duration-300 ease-in-out 
                     ">
