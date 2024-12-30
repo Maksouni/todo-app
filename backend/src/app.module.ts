@@ -8,6 +8,7 @@ import { User } from './users/entities/user.entity';
 import { TodosModule } from './todos/todos.module';
 import { Todo } from './todos/entities/todo.entity';
 import { PrismaService } from './prisma/prisma.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -16,17 +17,17 @@ import { PrismaService } from './prisma/prisma.service';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'user',
-      password: 'password',
-      database: 'mydatabase',
+      username: 'postgres',
+      password: 'Passw0rd',
+      database: 'todo-app-db',
       entities: [User, Todo],
       synchronize: true,
     }),
     UsersModule,
     TodosModule,
-    PrismaService,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [AppService, PrismaService, AuthModule],
 })
 export class AppModule {}
