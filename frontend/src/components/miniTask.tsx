@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useState } from "react";
+import { BACKEND_URL } from "../env";
 
 type MiniTaskProps = {
   title: string;
@@ -11,13 +13,15 @@ export default function MiniTask({
   description,
   isCompleted,
 }: MiniTaskProps) {
-    const [completed, setCompleted] = useState(isCompleted);
+  const [completed, setCompleted] = useState(isCompleted);
 
-    const handleToggle = () => {
-        setCompleted((prev) => !prev);
-    };
+  const handleToggle = () => {
+    const updateData = async () => {
+      const response = await axios.put(`${BACKEND_URL}/todos`)
+    }
+    setCompleted((prev) => !prev);
+  };
   return (
-    
     <div
       className="container mt-10 max-w-7xl mx-auto py-10 px-10 bg-surface-200 rounded-3xl 
         flex items-center justify-between"
