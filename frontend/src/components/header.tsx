@@ -2,7 +2,7 @@ export default function Header() {
     return (
         <header className="text-primary-50 p-4">
             <div className="container mx-auto flex flex-col justify-center items-center gap-5">
-                <h1 className="text-2xl font-bold">todo-app</h1>
+                <h1 className="text-3xl font-bold">todo-app</h1>
                 {/* searchbar */}
                 <div className="container flex justify-center">
                     <input
@@ -20,6 +20,16 @@ export default function Header() {
                             <path d="M33 33L30 30M31.5 17.25C31.5 25.1201 25.1201 31.5 17.25 31.5C9.37994 31.5 3 25.1201 3 17.25C3 9.37994 9.37994 3 17.25 3C25.1201 3 31.5 9.37994 31.5 17.25Z" stroke="#B9B9B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </button>
+                    <button className="w-28 ml-6 bg-transparent text-secondary text-3xl 
+                    border border-secondary border-4 rounded-3xl
+                    hover:scale-105 hover:text-onSecondary 
+                    hover:bg-gradient-to-r hover:from-secondary hover:to-primary-50
+                    hover:border-none
+                    transition duration-300 ease-in-out 
+                    ">
+                        +
+                    </button>
+                    
                 </div>
             </div>
         </header>
