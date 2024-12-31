@@ -27,15 +27,16 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get()
-  getProfile() {
-    return {message: "protected"};
+  @Get('test')
+  test() {
+    return this.usersService.test()
   }
 
   @Patch(':id')

@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -37,18 +38,24 @@ export class AuthService {
     }
   }
 
-  async validateUser(email: string, password: string): Promise<any> {
+  async validateUser(identifier: string, password: string): Promise<any> {
+    // Определяем, является ли идентификатор email
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);
+
+    // Ищем пользователя по email или username
     const user = await this.prisma.user.findUnique({
-      where: { email },
+      where: isEmail ? { email: identifier } : { username: identifier },
     });
 
-    if (user && (await bcrypt.compare(password, user.password))) {
-      return user;
+    // Если пользователь не найден или пароль неверный
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      throw new UnauthorizedException('Invalid credentials');
     }
-    return null;
+
+    return user;
   }
 
-  async login(user: any) {
+  async login(user: { id: number; email: string }) {
     const payload = { email: user.email, sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),
