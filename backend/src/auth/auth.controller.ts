@@ -7,7 +7,7 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() body: { email: string; username:string; password: string }) {
-    return this.authService.register(body.email, body.username, body.password);
+    return await this.authService.register(body.email, body.username, body.password);
   }
 
   @Post('login')
@@ -16,6 +16,6 @@ export class AuthController {
     if (!user) {
       throw new Error('Invalid credentials');
     }
-    return this.authService.login(user);
+    return await this.authService.login(user);
   }
 }
