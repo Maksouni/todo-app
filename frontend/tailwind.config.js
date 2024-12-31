@@ -9,8 +9,9 @@ export default {
       colors: {
         background: "#121212",
         surface: { "50": "#121212", "100": "#2C2C2C", "200": "#313131", "300": "#B9B9B9" },
-        primary: { "50": "#BB86FC", "100": "#3700B3" },
+        primary: { "50": "#BB86FC", "100": "#7A46C4" },
         secondary: "#03DAC6",
+        button: {"default": "#444444"},
         error: "#CF6679",
         onBackground: "#FFFFFF",
         onSurface: "#FFFFFF",
