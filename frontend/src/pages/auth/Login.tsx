@@ -3,11 +3,18 @@ import { useState } from "react";
 export default function Login() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleLogin = () => {};
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    if(identifier == "" || password == "") 
+      setError("Заполните поля ввода!")
+  };
 
   return (
     <form onSubmit={handleLogin}>
+      {error == "" ? <div /> : <p className="text-red">{error}</p>}
       <div className="mb-4 mt-5">
         <label
           htmlFor="email"
@@ -42,7 +49,7 @@ export default function Login() {
       </div>
       <button
         type="submit"
-        className="w-full bg-primary-200 text-white py-2 px-4 rounded hover:bg-primary-300 hover:scale-105 transition-all"
+        className="w-full bg-primary-200 text-white py-2 px-4 mt-3 rounded hover:bg-primary-300 hover:scale-105 transition-all"
       >
         Войти
       </button>
