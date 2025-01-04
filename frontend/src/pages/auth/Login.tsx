@@ -1,7 +1,7 @@
-import axios from "axios"
+import axios from "axios";
 import { useState } from "react";
 import { BACKEND_URL } from "../../env";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 export default function Login() {
   const [identifier, setIdentifier] = useState("");
@@ -9,18 +9,31 @@ export default function Login() {
   const [error, setError] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    try{
-      const response = await axios.post(`${BACKEND_URL}/auth/login`, {identifier, password});
+    try {
+      const response = await axios.post(`${BACKEND_URL}/auth/login`, {
+        identifier,
+        password,
+      });
 
-      Cookies.set('jwt_token', response.data.token, {
+      Cookies.set("jwt_token", response.data.access_token, {
         expires: 7, // токен будет жить 7 дней
         secure: false, // true - только через HTTPS
-        sameSite: 'Strict', // куки отправляются только на тот же домен
+        sameSite: "Strict", // куки отправляются только на тот же домен
       });
-    } catch {
-      setError("Ошибка входа. Попробуйте позже")
+      setError("");
+    } catch (error) {
+      // Обработка сетевых ошибок или ошибок сервера
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          setError("Неверно указан логин или пароль");
+        } else {
+          setError("Ошибка входа. Попробуйте позже");
+        }
+      } else {
+        setError("Ошибка входа. Попробуйте позже");
+      }
     }
   };
 
