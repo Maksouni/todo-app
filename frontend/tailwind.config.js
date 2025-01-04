@@ -9,7 +9,7 @@ export default {
       colors: {
         background: "#121212",
         surface: { "50": "#121212", "100": "#2C2C2C", "200": "#313131", "300": "#B9B9B9" },
-        primary: { "50": "#BB86FC", "100": "#7A46C4" },
+        primary: { "50": "#BB86FC", "100": "#9A60F2", "200": "#7A46C4", "300": "#6137A1", "400": "#4A287E", "500": "#361D5B"},
         secondary: "#03DAC6",
         button: {"default": "#444444"},
         error: "#CF6679",

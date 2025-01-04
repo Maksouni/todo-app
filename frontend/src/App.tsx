@@ -2,6 +2,7 @@ import "./App.css";
 import Header from "./components/header";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AuthPage from "./pages/auth/Auth";
+import Login from "./pages/auth/Login";
 
 // type Todo = {
 //   id: string;
@@ -31,7 +32,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/auth" element={<AuthPage />}>
-          <Route path="login" element={<div></div>}/>
+          <Route path="login" element={<Login />}/>
           <Route path="register" element={<div></div>}/>
         </Route>
       </Routes>
