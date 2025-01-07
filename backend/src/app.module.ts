@@ -4,9 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
-import { User } from './users/entities/user.entity';
 import { TodosModule } from './todos/todos.module';
-import { Todo } from './todos/entities/todo.entity';
 import { PrismaService } from './prisma/prisma.service';
 import { AuthModule } from './auth/auth.module';
 
@@ -20,7 +18,7 @@ import { AuthModule } from './auth/auth.module';
       username: 'postgres',
       password: 'Passw0rd',
       database: 'todo-app-db',
-      entities: [User, Todo],
+      entities: [],
       synchronize: true,
     }),
     UsersModule,
