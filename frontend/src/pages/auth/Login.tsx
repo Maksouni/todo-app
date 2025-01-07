@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
 import { BACKEND_URL } from "../../env";
-import Cookies from "js-cookie";
+import { useAuth } from "../../context/auth/useAuth";
 
 export default function Login() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { isAuthenticated, login } = useAuth()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,12 +18,9 @@ export default function Login() {
         password,
       });
 
-      Cookies.set("jwt_token", response.data.access_token, {
-        expires: 7, // токен будет жить 7 дней
-        secure: false, // true - только через HTTPS
-        sameSite: "Strict", // куки отправляются только на тот же домен
-      });
+      login(response.data.access_token)
       setError("");
+      
     } catch (error) {
       // Обработка сетевых ошибок или ошибок сервера
       if (axios.isAxiosError(error)) {

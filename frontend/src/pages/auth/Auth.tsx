@@ -1,6 +1,15 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/auth/useAuth";
+import { useEffect } from "react";
 
 export default function AuthPage() {
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  
+  useEffect(()=>{
+    if (isAuthenticated) navigate(-1)
+  }, [isAuthenticated, navigate])
+
   return (
     <div
       className="min-h-screen min-w-full fixed inset-0

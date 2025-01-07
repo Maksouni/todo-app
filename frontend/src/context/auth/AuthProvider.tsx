@@ -17,7 +17,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   const login = (token: string) => {
-    Cookies.set('jwt_token', token, { expires: 7 });
+    Cookies.set("jwt_token", token, {
+      expires: 7, // токен будет жить 7 дней
+      secure: false, // true - только через HTTPS
+      sameSite: "Strict", // куки отправляются только на тот же домен
+    });
     setIsAuthenticated(true);
   };
 
