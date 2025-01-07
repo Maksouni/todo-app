@@ -14,6 +14,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     if (token) {
       setIsAuthenticated(true);
     }
+    else {
+      setIsAuthenticated(false)
+    }
   }, []);
 
   const login = (token: string) => {
