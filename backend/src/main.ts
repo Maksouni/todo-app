@@ -10,7 +10,7 @@ async function bootstrap() {
     credentials: true, // Если нужно передавать куки или заголовки авторизации
   });
 
-  app.useGlobalFilters(new AllExceptionsFilter());
+  // app.useGlobalFilters(new AllExceptionsFilter());
 
   await app.listen(process.env.PORT ?? 3000);
 }
