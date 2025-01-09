@@ -10,10 +10,13 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { TodosService } from './todos.service';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { Prisma } from '@prisma/client';
+import { RoleGuard } from 'src/guards/role.guard';
+import { Role } from 'src/common/decorators/role.decorator';
 
 @Controller('todos')
+@UseGuards(RoleGuard)
 export class TodosController {
   constructor(private readonly todosService: TodosService) {}
 
@@ -23,6 +26,7 @@ export class TodosController {
   }
 
   @Get()
+  @Role('admin')
   findAll() {
     return this.todosService.findAll();
   }
@@ -48,3 +52,7 @@ export class TodosController {
     return this.todosService.remove(+id);
   }
 }
+function SetMetadata(arg0: string, role: string) {
+  throw new Error('Function not implemented.');
+}
+

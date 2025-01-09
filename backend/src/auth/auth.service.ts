@@ -23,6 +23,7 @@ export class AuthService {
           email,
           username,
           password: hashedPassword,
+          roleId: 1
         },
       });
       return user;
@@ -55,7 +56,7 @@ export class AuthService {
     return user;
   }
 
-  async login(user: { id: number; email: string }) {
+  async login(user: { id: number; email: string; }) {
     const payload = { email: user.email, userId: user.id };
     return {
       access_token: this.jwtService.sign(payload),

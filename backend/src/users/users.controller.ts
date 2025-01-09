@@ -9,16 +9,17 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { Prisma } from '@prisma/client';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  // @Post()
-  // async create(@Body() createUserDto: CreateUserDto) {
-  //   return await this.usersService.create(createUserDto);
-  // }
+  @Post()
+  async create(@Body() body: { email: string; username:string; password: string; roleId: number }) {
+    return await this.usersService.create(body.email, body.username, body.password, body.roleId);
+  }
 
   @Get()
   async findAll() {
