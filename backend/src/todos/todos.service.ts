@@ -17,13 +17,15 @@ export class TodosService {
   }
 
   async findTodosByUserId(userId: number) {
-    return this.prisma.todo.findMany({
+    return await this.prisma.todo.findMany({
       where: { userId },
     });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} todo`;
+  async findOne(id: number) {
+    return await this.prisma.todo.findFirst({
+      where: { id }
+    });
   }
 
   // update(id: number, updateTodoDto: UpdateTodoDto) {

@@ -1,4 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable, ForbiddenException } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  ForbiddenException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -14,20 +19,22 @@ export class OwnershipGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = request.headers.authorization?.split(' ')[1];
-    
+
     if (!token) {
       throw new ForbiddenException('No token provided');
     }
 
     const decodedToken = this.jwtService.decode(token) as any;
     const userIdFromToken = decodedToken.userId;
-    const requestedUserId = parseInt(context.switchToHttp().getRequest().params.id, 10);
+    const requestedUserId = parseInt(
+      context.switchToHttp().getRequest().params.userId,
+      10,
+    );
 
     if (isNaN(requestedUserId)) {
       throw new ForbiddenException('Invalid user ID');
     }
-
-    // Check if the user is trying to access their own data
+    // Check if the user is trying to access their own data by userId
     if (userIdFromToken === requestedUserId) {
       return true;
     }

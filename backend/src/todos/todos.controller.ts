@@ -50,6 +50,7 @@ export class TodosController {
     return this.todosService.findTodosByUserId(userId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.todosService.findOne(+id);
@@ -65,7 +66,5 @@ export class TodosController {
     return this.todosService.remove(+id);
   }
 }
-function SetMetadata(arg0: string, role: string) {
-  throw new Error('Function not implemented.');
-}
+
 
