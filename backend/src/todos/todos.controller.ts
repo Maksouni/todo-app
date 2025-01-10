@@ -8,22 +8,35 @@ import {
   Delete,
   ParseIntPipe,
   UseGuards,
+  UnauthorizedException,
+  Req,
 } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { Prisma } from '@prisma/client';
 import { RoleGuard } from 'src/guards/role.guard';
 import { Role } from 'src/common/decorators/role.decorator';
+import { OwnershipGuard } from 'src/guards/ownership.guard';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller('todos')
 @UseGuards(RoleGuard)
 export class TodosController {
-  constructor(private readonly todosService: TodosService) {}
+  constructor(private readonly todosService: TodosService, private jwtService: JwtService) {}
 
   @Post()
-  create(@Body() todoData: Prisma.TodoCreateInput) {
-    return this.todosService.create(todoData);
-  }
+  @UseGuards(JwtAuthGuard)
+  async create(@Req() req, @Body() todoData: Prisma.TodoCreateInput) {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+        throw new UnauthorizedException('Token not provided');
+    }
+
+    const decoded = this.jwtService.decode(token) as { userId: number };
+    const userId = decoded.userId;
+
+    return await this.todosService.create({ ...todoData, userId });
+}
 
   @Get()
   @Role('admin')
@@ -31,7 +44,7 @@ export class TodosController {
     return this.todosService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, OwnershipGuard)
   @Get('user/:userId')
   async getTodosByUserId(@Param('userId', ParseIntPipe) userId: number) {
     return this.todosService.findTodosByUserId(userId);

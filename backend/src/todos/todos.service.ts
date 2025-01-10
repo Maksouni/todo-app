@@ -4,11 +4,11 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class TodosService {
-  constructor(private prisma: PrismaService){}
-  
-  async create(data: Prisma.TodoCreateInput) {
+  constructor(private prisma: PrismaService) {}
+
+  async create(data: Prisma.TodoUncheckedCreateInput & { userId: number }) {
     return await this.prisma.todo.create({
-      data
+      data,
     });
   }
 
