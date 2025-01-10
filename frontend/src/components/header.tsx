@@ -17,7 +17,7 @@ export default function Header() {
                     rounded-xl rounded-s-none flex justify-center items-center border-s-0
                     ">
                         <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M33 33L30 30M31.5 17.25C31.5 25.1201 25.1201 31.5 17.25 31.5C9.37994 31.5 3 25.1201 3 17.25C3 9.37994 9.37994 3 17.25 3C25.1201 3 31.5 9.37994 31.5 17.25Z" stroke="#B9B9B9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M33 33L30 30M31.5 17.25C31.5 25.1201 25.1201 31.5 17.25 31.5C9.37994 31.5 3 25.1201 3 17.25C3 9.37994 9.37994 3 17.25 3C25.1201 3 31.5 9.37994 31.5 17.25Z" stroke="#B9B9B9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                     </button>
                     <button className="w-28 ml-6 bg-transparent text-secondary text-3xl 
