@@ -10,6 +10,7 @@ import {
   UseGuards,
   UnauthorizedException,
   Req,
+  NotFoundException,
 } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
@@ -22,38 +23,49 @@ import { JwtService } from '@nestjs/jwt';
 @Controller('todos')
 @UseGuards(RoleGuard)
 export class TodosController {
-  constructor(private readonly todosService: TodosService, private jwtService: JwtService) {}
+  constructor(
+    private readonly todosService: TodosService,
+    private jwtService: JwtService,
+  ) {}
 
   @Post()
   @UseGuards(JwtAuthGuard)
   async create(@Req() req, @Body() todoData: Prisma.TodoCreateInput) {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
-        throw new UnauthorizedException('Token not provided');
+      throw new UnauthorizedException('Token not provided');
     }
 
     const decoded = this.jwtService.decode(token) as { userId: number };
     const userId = decoded.userId;
 
     return await this.todosService.create({ ...todoData, userId });
-}
+  }
 
   @Get()
   @Role('admin')
-  findAll() {
-    return this.todosService.findAll();
+  async findAll() {
+    return await this.todosService.findAll();
   }
 
   @UseGuards(JwtAuthGuard, OwnershipGuard)
-  @Get('user/:userId')
-  async getTodosByUserId(@Param('userId', ParseIntPipe) userId: number) {
-    return this.todosService.findTodosByUserId(userId);
+  @Get('user/:id')
+  async getTodosByUserId(@Param('id', ParseIntPipe) id: number) {
+    return await this.todosService.findTodosByUserId(id);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.todosService.findOne(+id);
+  async findOne(@Req() req, @Param('id') id: string) {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+      throw new UnauthorizedException('Token not provided');
+    }
+
+    const decoded = this.jwtService.decode(token) as { userId: number };
+    const userId = decoded.userId;
+
+    return await this.todosService.findOne(+id, userId);
   }
 
   // @Patch(':id')
@@ -66,5 +78,3 @@ export class TodosController {
     return this.todosService.remove(+id);
   }
 }
-
-

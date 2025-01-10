@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 
@@ -22,10 +22,24 @@ export class TodosService {
     });
   }
 
-  async findOne(id: number) {
-    return await this.prisma.todo.findFirst({
-      where: { id }
+  async findOne(id: number, userId: number) {
+    const todo = await this.prisma.todo.findFirst({
+      where: { id },
     });
+    if (!todo) {
+      throw new NotFoundException();
+    }
+
+    const user = await this.prisma.user.findFirst({
+      where: { id: userId },
+      include: { role: true },
+    });
+
+    if (user.role.name !== "admin" && user.id !== todo.userId){
+      throw new ForbiddenException()
+    }
+    
+    return todo;
   }
 
   // update(id: number, updateTodoDto: UpdateTodoDto) {

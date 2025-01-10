@@ -27,7 +27,7 @@ export class OwnershipGuard implements CanActivate {
     const decodedToken = this.jwtService.decode(token) as any;
     const userIdFromToken = decodedToken.userId;
     const requestedUserId = parseInt(
-      context.switchToHttp().getRequest().params.userId,
+      context.switchToHttp().getRequest().params.id,
       10,
     );
 
