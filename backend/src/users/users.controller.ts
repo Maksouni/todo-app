@@ -11,8 +11,11 @@ import {
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { Prisma } from '@prisma/client';
+import { RoleGuard } from 'src/guards/role.guard';
+import { Role } from 'src/common/decorators/role.decorator';
 
 @Controller('users')
+@UseGuards(RoleGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -22,6 +25,7 @@ export class UsersController {
   }
 
   @Get()
+  @Role("admin")
   async findAll() {
     return await this.usersService.findAll();
   }
