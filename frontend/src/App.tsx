@@ -6,7 +6,9 @@ import Login from "./pages/auth/Login";
 import { AuthProvider } from "./context/auth/AuthProvider";
 import TaskListPage from "./pages/TaskListPage";
 
+
 function App() {
+
   return (
     <div className="min-h-screen">
       <AuthProvider>
@@ -26,3 +28,4 @@ function App() {
 }
 
 export default App;
+
