@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { BACKEND_URL } from "../env";
 import MiniTask from "../components/miniTask";
 import { useAuth } from "../context/auth/useAuth";
+import { useNavigate } from "react-router-dom";
 
 type Todo = {
   id: string;
@@ -14,6 +15,7 @@ type Todo = {
 export default function TaskListPage() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const { userId } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (userId > 0) {
@@ -28,8 +30,10 @@ export default function TaskListPage() {
         }
       };
       fetchData();
+    } else {
+      navigate('/auth/login')
     }
-  }, [userId]);
+  }, [navigate, userId]);
 
   return (
     <div className="min-w-screen">
