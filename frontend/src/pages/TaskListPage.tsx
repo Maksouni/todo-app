@@ -6,7 +6,7 @@ import { useAuth } from "../context/auth/useAuth";
 import { useNavigate } from "react-router-dom";
 
 type Todo = {
-  id: string;
+  id: number;
   title: string;
   description: string;
   completed: boolean;
@@ -24,14 +24,18 @@ export default function TaskListPage() {
           const response = await axios.get(
             `${BACKEND_URL}/todos/user/${userId}`
           );
-          setTodos(response.data);
+          const sortedTodos = response.data.sort(
+            (a: Todo, b: Todo) => a.id - b.id
+          ); // Сортировка по id
+          setTodos(sortedTodos);
         } catch (error) {
           console.error("Error fetching data:", error);
+          alert("Error! Try later.")
         }
       };
       fetchData();
     } else {
-      navigate('/auth/login')
+      navigate("/auth/login");
     }
   }, [navigate, userId]);
 
@@ -42,6 +46,7 @@ export default function TaskListPage() {
           todos.map((todo) => (
             <li key={todo.id}>
               <MiniTask
+                id={todo.id}
                 title={todo.title}
                 description={todo.description}
                 isCompleted={todo.completed}
