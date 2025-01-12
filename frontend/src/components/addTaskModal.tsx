@@ -12,7 +12,7 @@ interface AddTaskModalProps {
 export default function AddTaskModal({ isOpen, onClose }: AddTaskModalProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  // const [success, setSuccess] = useState(false);
+   const [isDisabled, setIsDisabled] = useState(false);
 
   const handeSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,6 +23,7 @@ export default function AddTaskModal({ isOpen, onClose }: AddTaskModalProps) {
         description,
       });
       if (response.status == 201) {
+        setIsDisabled(true)
         showAlert("Задача успешно добавлена", "success");
         // window.location.reload()
         setTimeout(() => {
@@ -92,7 +93,9 @@ export default function AddTaskModal({ isOpen, onClose }: AddTaskModalProps) {
 
         <button
           type="submit"
-          className="w-full bg-primary-200 text-white py-2 px-4 mt-3 rounded hover:bg-primary-300 hover:scale-105 transition-all"
+          className={`w-full bg-primary-200 text-white py-2 px-4 mt-3 rounded
+            hover:bg-primary-300 hover:scale-105 transition-all ${isDisabled ? 'bg-primary-50 hover:bg-primary-50' : ''}`}
+          disabled={isDisabled}
         >
           Добавить
         </button>
