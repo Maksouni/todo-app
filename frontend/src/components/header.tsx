@@ -48,14 +48,9 @@ export default function Header() {
                     hover:border-none
                     transition duration-300 ease-in-out 
                     "
-            >
-              +
-            </button>
-            <button
-              className="bg-white text-blue-500 px-4 py-2 rounded"
               onClick={() => setModalOpen(true)}
             >
-              Open Modal
+              +
             </button>
           </div>
         </div>

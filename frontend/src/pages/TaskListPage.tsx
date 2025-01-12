@@ -30,7 +30,6 @@ export default function TaskListPage() {
           setTodos(sortedTodos);
         } catch (error) {
           console.error("Error fetching data:", error);
-          alert("Error! Try later.")
         }
       };
       fetchData();
