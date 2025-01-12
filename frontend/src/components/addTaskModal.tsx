@@ -1,4 +1,8 @@
+import axios from "../api/axios";
 import { useState } from "react";
+import { BACKEND_URL } from "../env";
+import { showAlert } from "../managers/alertManager";
+import Alert from "./Alert";
 
 interface AddTaskModalProps {
   isOpen: boolean;
@@ -8,9 +12,26 @@ interface AddTaskModalProps {
 export default function AddTaskModal({ isOpen, onClose }: AddTaskModalProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  // const [success, setSuccess] = useState(false);
 
   const handeSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    try {
+      const response = await axios.post(`${BACKEND_URL}/todos`, {
+        title,
+        description,
+      });
+      if (response.status == 201) {
+        showAlert("Задача успешно добавлена", "success");
+        // window.location.reload()
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      }
+    } catch {
+      alert("Something went wrong. Try again later.");
+    }
   };
 
   if (!isOpen) return null;
@@ -61,9 +82,14 @@ export default function AddTaskModal({ isOpen, onClose }: AddTaskModalProps) {
             className="mt-1 min-h-[100px] max-h-[200px] block w-full rounded-md border-gray-300 shadow-sm focus:ring-primary-50"
             required
             maxLength={255}
-            
           />
         </div>
+        {/* {success && (
+          <div className="text-secondary text-center">
+            Задача успешно добавлена!
+          </div>
+        )} */}
+
         <button
           type="submit"
           className="w-full bg-primary-200 text-white py-2 px-4 mt-3 rounded hover:bg-primary-300 hover:scale-105 transition-all"
@@ -71,6 +97,7 @@ export default function AddTaskModal({ isOpen, onClose }: AddTaskModalProps) {
           Добавить
         </button>
       </div>
+      <Alert />
     </form>
   );
 }

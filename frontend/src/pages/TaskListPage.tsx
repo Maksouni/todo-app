@@ -25,7 +25,7 @@ export default function TaskListPage() {
             `${BACKEND_URL}/todos/user/${userId}`
           );
           const sortedTodos = response.data.sort(
-            (a: Todo, b: Todo) => a.id - b.id
+            (a: Todo, b: Todo) => b.id - a.id
           ); // Сортировка по id
           setTodos(sortedTodos);
         } catch (error) {
