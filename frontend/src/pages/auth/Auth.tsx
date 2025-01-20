@@ -52,11 +52,7 @@ export default function AuthPage() {
           </NavLink>
         </div>
         <Outlet />
-        <NavLink to={"/"} className="mt-5">
-          <p className="text-primary-50 underline underline-offset-2">
-            На главную
-          </p>
-        </NavLink>
+        
       </div>
     </div>
   );
