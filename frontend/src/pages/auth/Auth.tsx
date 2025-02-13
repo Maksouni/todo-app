@@ -52,7 +52,7 @@ export default function AuthPage() {
           </NavLink>
         </div>
         <Outlet />
-        
+        <div className="mb-4"></div>
       </div>
     </div>
   );
